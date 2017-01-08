@@ -258,7 +258,7 @@ end;
 
 x_rows:=8; {icerde islenecek  daha}
 y_rows:=15;   {icerde islenecek  daha}
-ratio:=70; {yüzdeli}
+ratio:=70; {yÃ¼zdeli}
 code_length:=5;
 
 sure:=5;{kod ilk gosterim suresi}
@@ -467,8 +467,8 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
 		begin
 		if setting=0 then 
   begin
-        ratio:=ratio+5;
-        if ratio=100 then ratio:=5;
+        ratio:=ratio+10;
+        if ratio=100 then ratio:=10;
   end
 		else 
 		if setting=1 then 
@@ -500,8 +500,8 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
 		begin
 		if setting=0 then 
   begin
-        ratio:=ratio-5;
-        if ratio <10 then ratio:=95;
+        ratio:=ratio-10;
+        if ratio <20 then ratio:=90;
   end
 		else 
 		if setting=1 then
@@ -562,7 +562,7 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
          if jenerik>=23 then  begin bosluk(jenerik2); writeln('    END...'); end;
          if jenerik>=22 then writeln();
          if jenerik>=21 then writeln();
-         if jenerik>=20 then  begin bosluk(jenerik2); writeln('Copyright © 2016');end;
+         if jenerik>=20 then  begin bosluk(jenerik2); writeln('Copyright Â© 2016');end;
          if jenerik>=19 then  begin bosluk(jenerik2); writeln('All Rights Reserved'); end;
          if jenerik>=18 then  begin bdef();bosluk(jenerik); writeln(''); end;
          if jenerik>=17 then  begin bosluk(jenerik); writeln('Manager & Director'); end;
@@ -943,7 +943,7 @@ altbar();
    end
 
    else
-   if(keyingame=27)   {pause olayý}
+   if(keyingame=27)   {pause olayÃ½}
    OR (keyingame=112)
    OR (keyingame=80)
    OR (keyingame=8)
@@ -1077,7 +1077,7 @@ begin
 
 end;
    asciiarrow:=1;
-   timebegin:=time();{sure baslýyor *tekrar }
+   timebegin:=time();{sure baslÃ½yor *tekrar }
    scb();
    repeat
    clrscr;
