@@ -7,44 +7,19 @@ sysutils,crt,windows;
 var
 hr, min, sec, ms: Word;
 
-m1d,m1e,m1t,
-m2d,m2e,m2t,
-m3d,m3e,m3t,
-m4d,m4e,m4t,
-m5d,m5e,m5t,
-
-skd,ske,skt,
-
-st1d,st1e,st1t,
-st2d,st2e,st2t,
-st3d,st3e,st3t,
-st4d,st4e,st4t,
-st5d,st5e,st5t,
-
-ps1d,ps1e,ps1t,
-ps2d,ps2e,ps2t,
-ps3d,ps3e,ps3t,
-ps4d,ps4e,ps4t,
-
-sts1d,sts1e,sts1t,
-sts2d,sts2e,sts2t,
-
-fn1d,fn1e,fn1t,
-fn2d,fn2e,fn2t,
-fn3d,fn3e,fn3t,
-fn4d,fn4e,fn4t,
-
-cs1d,cs1e,cs1t,
-cs2d,cs2e,cs2t
-
+m1d,m1e,m1t, st1d,st1e,st1t, ps1d,ps1e,ps1t, fn1d,fn1e,fn1t,
+m2d,m2e,m2t, st2d,st2e,st2t, ps2d,ps2e,ps2t, fn2d,fn2e,fn2t,
+m3d,m3e,m3t, st3d,st3e,st3t, ps3d,ps3e,ps3t, fn3d,fn3e,fn3t, skd,ske,skt,
+m4d,m4e,m4t, st4d,st4e,st4t, ps4d,ps4e,ps4t, fn4d,fn4e,fn4t, cs1d,cs1e,cs1t,
+m5d,m5e,m5t, st5d,st5e,st5t, sts1d,sts1e,sts1t, sts2d,sts2e,sts2t, cs2d,cs2e,cs2t
 :string;
 
 Rect: TSmallRect;
 Coord: TCoord;
 
-c:integer;
+c:integer; {color}
 
-x_rows,y_rows,ratio,code_length,sure:integer;
+y_temp,x_temp,x_rows,y_rows,ratio,code_length,sure:integer;
 
 codepreview:char;
 
@@ -55,8 +30,6 @@ status:integer;
  status=2 1. oyunu kazanma durumu
  status=3 2. oynunu da kazanma durumu /skor tablosu direk gecis
 }
-
-y_temp,x_temp:integer;
 
 x,y,i,j,k,asciirand:integer;
 
@@ -70,27 +43,24 @@ colorpreview:char;
 
 jenerik,jenerik2:integer;
 {
-olasi karisikliklari onlemek icin her menu icin farklý bir degisken
+olasi karisikliklari onlemek icin her menu icin farklÄ± bir degisken
 atadim boylece ibrenin nerede kaldigida saklanmis oluyor
 
-  char alýnan key ayný olabilirdi
-  ancak okuma kolaylýgý ve anlasilabilirlik adina farkli degiskenler verdim
+  char alÄ±nan key aynÄ± olabilirdi
+  ancak okuma kolaylÄ±gÄ± ve anlasilabilirlik adina farkli degiskenler verdim
 }
-keypress:char;
 
-keyingame:integer;
 
-presspause,pause:integer;
 
-pressmenu,menu:integer;
 
-presslang,lang:integer;
 
-presssetting,setting:integer;
+keypress:char; keyingame:integer;
 
-pressascii,asciiarrow:integer;
+presspause,pause,        pressmenu,menu,           presslang,lang,
 
-x_zeroCount:array[1..100] of integer;
+presssetting,setting,     pressascii,asciiarrow:integer;
+
+x_zeroCount:array[1..100] of integer;{harita uretimi iÃ§in elzem}
 
 Dpcoded:array[1..100,1..200] of char;   {cerceve ve kapali bloklar}
 Dpencoded:array[1..100,1..200] of integer; {sayilar}
@@ -107,19 +77,19 @@ header:array[1..10] of string;  {oyun basligi}
 
 {burada oyun ici ekranlarda guzel bir gorunum yakalama amaciyla olusturulmus
 prosedurler var elbette daha iyileri yapilabilrdi ancak alttakilerde biraz
-is görebiliyor}
+is gÃ¶rebiliyor}
 
 procedure sc(); {renkle imlec(acik mavi)}
 begin
 textcolor(11);
 end;
-
+{_______________________________________}
 procedure scb();{renk beyaz}
 begin
 textcolor(15);
 end;
 
-{ortali yazdirma ugruna adanmis prosedurler}
+{_________________________ortali yazdirma ugruna adanmis prosedÃ¼rler______________________________}
 
 procedure bosluk(var tane:integer);
 var
@@ -128,7 +98,7 @@ begin
 for foricin:=1 to tane do
   write(' ');
 end;
-
+{_______________________________________}
 procedure i_ort(var tane:integer);
 var
 foricin,temp:integer;
@@ -144,11 +114,11 @@ var
 foricin:integer;
 nicin:integer;
 begin
-nicin:= 41-(length(str) DIV 2);
+nicin:= 40-(length(str) DIV 2);
 for foricin:=1 to nicin do
 write(' ');
 end;
-
+{_______________________________________}
 procedure boslukstring(var str:string);
 var
 foricin:integer;
@@ -158,8 +128,7 @@ nicin:=length(str);
 for foricin:=1 to (25-nicin) do
 write(' ');
 end;
-
-
+{_______________________________________}
 procedure tirestring(var str:string);
 var
 foricin:integer;
@@ -169,13 +138,12 @@ nicin:=length(str);
 for foricin:=1 to (40-nicin) do
 write('-');
 end;
-
+{_______________________________________}
 procedure bdef();
 begin
 write('                ');
 end;
-
-
+{_______________________________________}
 procedure altbar();
 begin
    writeln;
@@ -183,28 +151,25 @@ begin
    writeln('                                ===(SymbolGame)===');
    writeln();
 end;
-
-
-
+{_______________________________________}
 begin
 
 {ekranin sabit kalabilmesi icin bulabildigim bir kod windows komut istemi pence kontrolunu sagliyor}
 Rect.Left := 0;
   Rect.Top := 0;
-  Rect.Right := 80;
-  Rect.Bottom := 40;
+  Rect.Right := 80;                                                       // 80 birim en
+  Rect.Bottom := 40;                                                 // 40 birim boy
   Coord.X := Rect.Right + 1 - Rect.Left;
   Coord.y := Rect.Bottom + 1 - Rect.Top;
   SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), Coord);
   SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), True, Rect);
+
 
 {varsayilan seyler---------------------------------------------------------}
  header[1]:=' ____  _  _  _  _  ____   __   __       ___   __   _  _  ____ ';
  header[2]:='/ ___)( \/ )( \/ )(  _ \ /  \ (  )     / __) / _\ ( \/ )(  __)';
  header[3]:='\___ \ )  / / \/ \ ) _ ((  O )/ (_/\  ( (_ \/    \/ \/ \ ) _) ';
  header[4]:='(____/(__/  \_)(_/(____/ \__/ \____/   \___/\_/\_/\_)(_/(____)';
-
-
 
 colorpreview:=#219;
 
@@ -215,7 +180,6 @@ m4t:='Cikis';m4e:='Exit';
 m5t:='skorlar';m5e:='Scores';
 
 skt:='skor';ske:='score';
-
 
 st1t:='tas orani';st1e:='stone ratio';
 st2t:='satir sayisi';st2e:='line number';
@@ -236,13 +200,12 @@ fn2e:='cost of +10 secs';fn2t:='+10 saniye ekler';
 fn3e:='Predict The Code:';fn3t:='Kodu Tahmin Edin';
 fn4e:='wrong codes add +5 sec';fn4t:='yalnlis girisler 5 sn ekler';
 
-
 cs1e:='YOU HAVE BEAT THE GAME';cs1t:='OYUNU KAZANDINIZ';
 cs2e:='Enter Your Name:';cs2t:='Adinizi Girin:';
 
 for i:=1 to 10 do
 begin
-playername[i]:='Player';
+playername[i]:='Player'; 
 
 end;
 
@@ -254,11 +217,15 @@ end;
 
 
 
+
+
+
+
 {def degerler-----------------------------------------------------------------------------------------}
 
-x_rows:=10; {icerde islenecek  daha}
+x_rows:=5; {icerde islenecek  daha}
 y_rows:=10;   {icerde islenecek  daha}
-ratio:=10; {yüzdeli}
+ratio:=20; {yÃ¼zdeli}
 code_length:=5;
 
 sure:=5;{kod ilk gosterim suresi}
@@ -288,10 +255,10 @@ begin
   if presslang=0 then
           begin keypress := readkey;
 		  presslang:= ord(keypress);  
-          if presslang=72 then lang:=lang+1
-		  else
-		  if presslang=80 then lang:=lang-1;
-		  lang:=abs(lang mod 2);
+                if presslang=72 then lang:=lang+1
+                else
+                if presslang=80 then lang:=lang-1;
+         lang:=abs(lang mod 2);
           end;
 end;
 until (presslang=13) OR (presslang=27);
@@ -300,17 +267,17 @@ until (presslang=13) OR (presslang=27);
     else
     begin {dil deger atama------------------------------------------}
 	if lang=0 then 
-	   begin
-	       m1d:=m1t;
-	       m2d:=m2t;
-	       m3d:=m3t;
-	       m4d:=m4t;
-           m5d:=m5t;
-		   skd:=skt;
-		   st1d:=st1t;
-		   st2d:=st2t;
-		   st3d:=st3t;
-		   st4d:=st4t;
+	   begin 
+            m1d:=m1t;
+            m2d:=m2t; 
+            m3d:=m3t; 
+            m4d:=m4t;
+            m5d:=m5t;
+            skd:=skt;
+            st1d:=st1t;
+           st2d:=st2t;
+           st3d:=st3t;
+           st4d:=st4t;
            st5d:=st5t;
            ps1d:=ps1t;
            ps2d:=ps2t;
@@ -327,16 +294,16 @@ until (presslang=13) OR (presslang=27);
 	   end
 	   else
 	   begin
-	   	   m1d:=m1e;
-	       m2d:=m2e;
-	       m3d:=m3e;
-	       m4d:=m4e;
+           m1d:=m1e;
+           m2d:=m2e; 
+           m3d:=m3e;
+           m4d:=m4e;
            m5d:=m5e;
            skd:=ske;
-		   st1d:=st1e;
-		   st2d:=st2e;
-		   st3d:=st3e;
-		   st4d:=st4e;
+           st1d:=st1e;
+           st2d:=st2e;
+           st3d:=st3e;
+           st4d:=st4e;
            st5d:=st5e;
            ps1d:=ps1e;
            ps2d:=ps2e;
@@ -399,7 +366,7 @@ s_ort(m4d); if menu=4 then sc();writeln(m4d);  scb();
 
     end
     until(pressmenu=13) OR (pressmenu=27);
-    
+    if  pressmenu = 27 then halt;
 	if menu=1 then{ayarlar giris---------------------------------------------}
 	   begin
        setting:=0;
@@ -456,19 +423,19 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
 		if setting=0 then 
   begin
         ratio:=ratio+10;
-        if ratio>90 then ratio:=10;
+        if ratio>100 then ratio:=10;
   end
 		else 
 		if setting=1 then 
   begin
 	    x_rows:=x_rows+1;
-        if x_rows >15 then x_rows:=1;
+        if x_rows >18 then x_rows:=1;
   end
 		else
 		if setting=2 then
   begin
 		y_rows:=y_rows+1;
-        if y_rows > 30 then y_rows:=1;
+        if y_rows > 36 then y_rows:=1;
   end
 		else
 		if setting=3 then
@@ -489,19 +456,19 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
 		if setting=0 then 
   begin
         ratio:=ratio-10;
-        if ratio <10 then ratio:=90;
+        if ratio <10 then ratio:=100;
   end
 		else 
 		if setting=1 then
   begin
 	    x_rows:=x_rows-1;
-        if x_rows <1 then x_rows:=15;
+        if x_rows <1 then x_rows:=18;
   end
 		else
 		if setting=2 then
   begin
 		y_rows:=y_rows-1;
-        if y_rows <1 then y_rows:=30;
+        if y_rows <1 then y_rows:=36;
   end
 		else
 		if setting=3 then
@@ -520,7 +487,7 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
   {no solution fix------------------------------------------FIX--BEGIN}
   {anlasilabilirlik acisindan kodu mantiksal olarak kisaltmadim-------}
 
-   zeroCountFix:=y_rows/x_rows;//cozum icin satýr basi 0 orani
+   zeroCountFix:=y_rows/x_rows;//cozum icin satÄ±r basi 0 orani
 
    if (zeroCountFix)>(y_rows DIV x_rows) // tam degerler almali
    then
@@ -565,7 +532,7 @@ bdef(); boslukstring(st3d);if setting=4 then sc();write(st5d);  scb();
          if jenerik>=23 then  begin bosluk(jenerik2); writeln('    END...'); end;
          if jenerik>=22 then writeln();
          if jenerik>=21 then writeln();
-         if jenerik>=20 then  begin bosluk(jenerik2); writeln('Copyright © 2016');end;
+         if jenerik>=20 then  begin bosluk(jenerik2); writeln('Copyright Â© 2016');end;
          if jenerik>=19 then  begin bosluk(jenerik2); writeln('All Rights Reserved'); end;
          if jenerik>=18 then  begin bdef();bosluk(jenerik); writeln(''); end;
          if jenerik>=17 then  begin bosluk(jenerik); writeln('Manager & Director'); end;
@@ -613,7 +580,6 @@ begin
  writeln('                    _____________________loading_____________________');
  writeln();
 
-
 {standart setup-----------------------------------}
 x:=2;
 y:=2;
@@ -627,7 +593,7 @@ jmax:= 2 * y_rows + 1;
 
 zeroRatio:=((ratio*y_rows) DIV 100);//bir satirda kac 0 olmalidir
 
- for i:=1 to imax do
+ for i:=1 to imax do       //bloklar
  begin
    for j:=1 to jmax do
    begin
@@ -635,7 +601,7 @@ zeroRatio:=((ratio*y_rows) DIV 100);//bir satirda kac 0 olmalidir
    end;
  end;
 
- for i:=1 to imax do
+ for i:=1 to imax do  //cerceve1
  begin
    for j:=1 to jmax do
    begin
@@ -647,7 +613,7 @@ zeroRatio:=((ratio*y_rows) DIV 100);//bir satirda kac 0 olmalidir
 end;
 
 
-for i:=1 to imax do
+for i:=1 to imax do             //cerceve2 + kesisimler
 begin
    for j:=1 to jmax do
    begin
@@ -660,25 +626,24 @@ begin
 end;
 
 
-  for j:=1 to jmax do
+  for j:=1 to jmax do              //kenar fix1
   begin
   dpcoded[1,j]:=#203;
   dpcoded[imax,j]:=#202;
   j:=j+1;
   end;
 
-  for i:=1 to imax do
+  for i:=1 to imax do               //kenar fix2 
   begin
   dpcoded[i,1]:=#204;
   dpcoded[i,jmax]:=#185;
   i:=i+1;
   end;
 
-  dpcoded[1,1]:=#201;
+  dpcoded[1,1]:=#201;        //koseler
   dpcoded[1,jmax]:=#187;
   dpcoded[imax,1]:=#200;
   dpcoded[imax,jmax]:=#188;
-
 
   for i:=2 to imax do
   begin
@@ -690,11 +655,11 @@ end;
   dusundugumuz vakit buralar degerlenebilir o zamana dek delay() kullandim ki
   gozle gorulebilsin ne oldugu
   }
-  { harita uretme seysi-----------------------------}
 
 
 
 
+  { harita uretmek--------------------------------------------------------------------------------------------------MAP GEN------}
 
    for i:=2 to imax do
    begin
@@ -714,9 +679,8 @@ end;
         //until(ratio <= ((100*zeroCount) DIV x_rows ));
       end;
    end;
-     write('||||||||');
+                write('||||||||');
      delay(75); { <= hakkinda bir yazi var yukarda}
-
 
    for j:=2 to jmax do
    begin
@@ -730,9 +694,7 @@ end;
          x_zeroCount[x_temp]:=x_zeroCount[x_temp]+1;
      end;
    end;
-
-
-   write('|||||||');
+              write('|||||||');
    delay(100);  { <= hakkinda bir yazi var yukarda}
 
    for i:=2 to imax do
@@ -748,10 +710,8 @@ end;
        end;
      end;
    end;
-
-   write('|||||||||||||||');
+              write('|||||||||||||||');
    delay(150);  { <= hakkinda bir yazi var yukarda}
-
    {map gen end----------------------------------------------------------}
 
 
@@ -785,7 +745,6 @@ end;
 
 {display & gameplay below}
 
-
  repeat{cheat olayi icin}
  begin
   repeat   {surekli key icin rep}
@@ -809,7 +768,10 @@ end;
  end;
  altbar();
 {display--------------------------------------------------block--end}
-   keypress:=readkey;
+  
+
+
+ keypress:=readkey;
    keyingame:=ord(keypress);
    if keyingame=0 then
        begin
@@ -823,7 +785,7 @@ end;
        else
        if keyingame=80 then
        begin
-       {80 ayni zamanda P nin ascii kodudur,girdinin ancak P tusu ile 80 olmasi gerekir}
+       {80 ayni zamanda P nin ascii kodudur,girdinin sadece P tuÅŸuna basildiginda 80 olmasi gerekir}
        keyingame:=0;
        x:=x+2;
        if x>(2*x_rows) then x:=2;
@@ -844,7 +806,6 @@ end;
    if(keyingame=13) OR (keyingame=77) OR (keyingame=32) then
    begin
 
-
      clrscr;      {rakam acma ekrani}
 {display-------------------------------------------------code--begin}
  for i:=1 to imax do
@@ -863,7 +824,8 @@ end;
 altbar();
    delay(200);  {ms bazinda acik kalma suresi}
 
-   if dpencoded[x,y]=0 then {ilerleme gerileme mantigi}
+{ilerleme gerileme mantigi----------------------------------------------------}
+   if dpencoded[x,y]=0 then 
    begin
    dpcoded[x,y]:=#176;
    y:=y+2;
@@ -911,9 +873,8 @@ altbar();
    keyingame:=ord(keypress);
    if keyingame=0 then readkey;
    end
-
    else
-   if(keyingame=27)   {pause olayý---------------------------------PAUSE BEGIN}
+   if(keyingame=27)   {pause olayÄ±---------------------------------PAUSE BEGIN}
    OR (keyingame=112)
    OR (keyingame=80)
    OR (keyingame=8)
@@ -969,7 +930,6 @@ altbar();
       else
       if pause=1 then status:=1;
       end;
-
 
     end;
 
@@ -1037,7 +997,7 @@ begin
 
 end;
    asciiarrow:=1;
-   timebegin:=time();{sure baslýyor *tekrar }
+   timebegin:=time();{sure baslÄ±yor *tekrar }
    scb();
    repeat
    clrscr;
@@ -1081,37 +1041,40 @@ s_ort(fn3d); writeln(fn3d);
    s_ort(fn2d);writeln(fn2d);
    writeln();
 
+
+
+
     keypress:=readkey;
 	pressascii:=ord(keypress);
    if pressascii=32 then   {kodu 2. gosterisi}
    begin
-   timecount:=timecount+0.00012;{10 a yaklasik oldugundan}
+   timecount:=timecount+0.00012;{10 sn  yaklasik deger}
     clrscr;
     writeln();
     writeln();
     writeln();
-    s_ort(m1d); writeln('   CODE:');
+    s_ort(ske); writeln('CODE:');
     writeln();
     writeln();
     i_ort(code_length);
-    write('>>>');
+    textcolor(13);
       for i:=1 to code_length do
       begin
       codepreview:=chr(ascii[i]);
       write(codepreview);
       end;
-      writeln('<<<');
+    scb();
       writeln();
       writeln();
 
-   write('         '); boslukstring(ps2d);
+   write('                    ');
    DecodeTime(timecount,hr, min, sec, ms);
    bdef(); write (format('+ %d:',[hr]));
     write (format('%d:',[min]));
     write (format('%d',[sec]));
                   writeln();
                   writeln();
-      delay(1000);
+      delay(1500);
 
    end
    else
@@ -1120,7 +1083,7 @@ s_ort(fn3d); writeln(fn3d);
     begin
     asciiarrow:=asciiarrow+1;
     if asciiarrow > code_length then
-    status:=3;
+    status:=3;                                                  //oyun kazanildi skor ekranina yonlendirtme
     end
     else
     begin
@@ -1128,7 +1091,17 @@ s_ort(fn3d); writeln(fn3d);
     textcolor(lightred); s_ort(m1d); write('!!!!'); delay(250); scb();
     end;
    until(pressascii=27) OR (status=3);
-   if status=3 then
+  
+
+
+
+
+
+
+
+
+
+ if status=3 then
    begin
    timecount:=timecount+(time()-timebegin);{zaman hesabi}
    scoretemp:=timecount;
@@ -1138,7 +1111,6 @@ s_ort(fn3d); writeln(fn3d);
    writeln();
    s_ort(cs1d); writeln(cs1d);
    writeln();
-
    writeln();
 
     bdef(); bdef(); write(skd);   DecodeTime(scoretemp,hr, min, sec, ms);
@@ -1181,7 +1153,10 @@ s_ort(fn3d); writeln(fn3d);
    end;//menu 0 end
 
    end;//menu restart end //ara cikis
-   if(status=3) then{kazanma sonu/skor tablosu------------------------------------------------------------}
+
+
+
+   if(status=3) then    {kazanma sonu/skor tablosu------------------------------------------------------------}
    begin
    clrscr;
 
@@ -1204,7 +1179,7 @@ s_ort(fn3d); writeln(fn3d);
    writeln();
    writeln();
 
-   status:=0; {menu durumu sýfýrlama}
+   status:=0; {menu durumu sÄ±fÄ±rlama}
    end;
 
    readkey;
