@@ -13,3 +13,5 @@ if you didnt remember code , press space to reveal code for few secs that is als
 
 when you beat the whole game you can enter your user game which appears on score board
 scoreboard designed to show top 10 player name ny their ascending score.
+
+"for first part c key reveals the table"
