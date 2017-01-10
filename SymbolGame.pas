@@ -21,8 +21,6 @@ c:integer; {color}
 
 y_temp,x_temp,x_rows,y_rows,ratio,code_length,sure:integer;
 
-codepreview:char;
-
 status:integer;
 {
  status=0 pasif hal
@@ -672,11 +670,8 @@ end;
             if j mod 2 =0 then
             begin
             dpencoded[i,j]:=random(3)+1;
-            //if dpencoded[i,j]=0 then
-            //zeroCount:=zeroCount+1;
             end;
           end;
-        //until(ratio <= ((100*zeroCount) DIV x_rows ));
       end;
    end;
                 write('||||||||');
@@ -982,10 +977,9 @@ begin
     writeln();
     writeln();
     i_ort(code_length);
-      for i:=1 to code_length do
+      for i:=1 to code_length do {kodu sure * 800ms kadar ekranda tutuyor }
       begin
-      codepreview:=chr(ascii[i]);
-      write(codepreview);
+      write(chr(ascii[i]));
       end;
     writeln();
     writeln();
@@ -1023,8 +1017,7 @@ s_ort(fn3d); writeln(fn3d);
        end
     else
        begin
-       codepreview:=chr(ascii[i]);
-       write(codepreview);
+       write(chr(ascii[i]));
        end;
    end;
 
@@ -1060,8 +1053,7 @@ s_ort(fn3d); writeln(fn3d);
     textcolor(13);
       for i:=1 to code_length do
       begin
-      codepreview:=chr(ascii[i]);
-      write(codepreview);
+      write(chr(ascii[i]));
       end;
     scb();
       writeln();
